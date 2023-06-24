@@ -1,28 +1,32 @@
-import myRoom from "./images/maps/DemoLower.png";
+import myRoom from "./images/maps/myRoom.png";
 import shadowImage from "./images/characters/shadow.png";
 import playerImage from "./images/characters/people/player.png";
 
 export class OverWorld {
     constructor(config) {
         this.element = config.element;
-        this.canvas = config.canvas;
-
+        this.canvas = this.element.querySelector(".gameCanvas");
         this.ctx = this.canvas.getContext("2d");
+        this.canvas.width = 192;
+        this.canvas.height = 192;
     }
 
     init() {
-
         const image = new Image();
-
         image.src = myRoom;
-        image.onload = () => {
+        image.onload =  () => {
             this.ctx.drawImage(image, 0, 0);
+            console.log("image onLoaded");
+            console.log(image);
         };
 
-        const x = 5;
+
+
+        const x = 4;
         const y = 6;
 
         const shadow = new Image();
+        shadow.src = shadowImage;
         shadow.onload = () => {
             this.ctx.drawImage(
                 shadow,
@@ -36,10 +40,10 @@ export class OverWorld {
                 32
             )
         }
-        shadow.src = shadowImage;
 
 
         const player = new Image();
+        player.src = playerImage
         player.onload = () => {
             this.ctx.drawImage(
                 player,
@@ -52,10 +56,7 @@ export class OverWorld {
                 32,
                 32
             )
-        }
-        player.src = playerImage;
-
-
+        };
 
     }
 }

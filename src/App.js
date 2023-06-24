@@ -2,7 +2,6 @@ import {Route, Router, Routes} from "react-router-dom";
 import './App.css';
 import React from "react";
 import Home from "./pages/Home";
-
 function App() {
     return (
         <div className="App">
@@ -14,5 +13,4 @@ function App() {
 
     );
 }
-
 export default App;
