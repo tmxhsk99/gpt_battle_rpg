@@ -1,12 +1,12 @@
 import "./Home.css";
-import Game from "../component/Game";
-
+import GameContainer from "../component/GameContainer";
+import React from "react";
 const Home = () => {
     return (
         <div>
             <h1>메인 게임</h1>
-            <div className="containser">
-                <Game/>
+            <div className="container">
+                <GameContainer/>
             </div>
 
         </div>

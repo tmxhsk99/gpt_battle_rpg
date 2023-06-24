@@ -1,0 +1,15 @@
+.GameContainer {
+    position: relative;
+    width: 352px;
+    height: 198px;
+    outline: 1px solid #fff;
+    margin: 0 auto;
+    margin-top: 20px;
+
+    transform: scale(3) translateY(50%);
+
+}
+
+.GameContainer canvas {
+    image-rendering: pixelated;
+}
