@@ -9,7 +9,6 @@ const GameContainer = () => {
     const gameContainer = useRef(null);
 
     useEffect(() => {
-        console.log(gameContainer.current);
         const overWorld = new OverWorld({
             element: gameContainer.current,
         });
