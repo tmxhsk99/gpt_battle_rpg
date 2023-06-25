@@ -14,20 +14,33 @@ export class Person extends GameObject {
             "right": ["x", 1],
         }
     }
+
     update(state) {
         this.updatePosition();
-        if(this.isPlayerControlled && this.movingProgressRemaining === 0 && state.arrow) {
+        this.updatedSprite(state);
+
+        if (this.isPlayerControlled && this.movingProgressRemaining === 0 && state.arrow) {
             this.direction = state.arrow;
             this.movingProgressRemaining = 16;
         }
     }
 
     updatePosition() {
-        if(this.movingProgressRemaining > 0) {
+        if (this.movingProgressRemaining > 0) {
             const [property, change] = this.directionUpdate[this.direction];
             this[property] += change;
             this.movingProgressRemaining -= 1;
         }
     }
 
+    updatedSprite(state) {
+        if (this.isPlayerControlled && this.movingProgressRemaining === 0 && !state.arrow) {
+            this.sprite.setAnimation("idle-" + this.direction);
+            return;
+        }
+
+        if (this.movingProgressRemaining > 0) {
+            this.sprite.setAnimation("walk-" + this.direction);
+        }
+    }
 }

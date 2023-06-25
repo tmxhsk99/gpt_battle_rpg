@@ -26,10 +26,16 @@ export class OverWorld {
                 object.sprite.draw(this.ctx);
             });
             // 캔버스 middle 레이어를 그린다.
-            this.map.drawMiddleImage(this.ctx);
+            // middleLayer는 없을 수도 있다.
+            if(this.map.middleImage){
+                this.map.drawMiddleImage(this.ctx);
+            }
+
 
             // 캔버스의 upper 레이어를 그린다.
-            this.map.drawUpperImage(this.ctx);
+            if(this.map.upperImage){
+                this.map.drawUpperImage(this.ctx);
+            }
 
             requestAnimationFrame(() => {
                 step();
@@ -39,7 +45,7 @@ export class OverWorld {
         step();
     }
     init() {
-        this.map = new OverWorldMap(window.window.OverWorldMap.myHome2F);
+        this.map = new OverWorldMap(window.window.OverWorldMap.myHome1F);
         this.directionInput = new DirectionInput();
         this.directionInput.init();
         this.startGameLoop();

@@ -19,11 +19,16 @@ export class OverWorldMap {
         this.lowerImage = new Image();
         this.lowerImage.src = config.lowerSrc;
 
-        this.middleImage = new Image();
-        this.middleImage.src = config.middleSrc;
+        if(config.middleSrc){
+            this.middleImage = new Image();
+            this.middleImage.src = config.middleSrc;
+        }
 
-        this.upperImage = new Image();
-        this.upperImage.src = config.upperSrc;
+        if(config.upperSrc){
+            this.upperImage = new Image();
+                    this.upperImage.src = config.upperSrc;
+        }
+
     }
 
     drawLowerImage(ctx) {
