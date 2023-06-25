@@ -19,28 +19,40 @@ export class OverWorldMap {
         this.lowerImage = new Image();
         this.lowerImage.src = config.lowerSrc;
 
-        if(config.middleSrc){
+        if (config.middleSrc) {
             this.middleImage = new Image();
             this.middleImage.src = config.middleSrc;
         }
 
-        if(config.upperSrc){
+        if (config.upperSrc) {
             this.upperImage = new Image();
-                    this.upperImage.src = config.upperSrc;
+            this.upperImage.src = config.upperSrc;
         }
 
     }
 
-    drawLowerImage(ctx) {
-        ctx.drawImage(this.lowerImage, 0, 0,);
+    drawLowerImage(ctx, cameraPerson) {
+        ctx.drawImage(
+            this.lowerImage,
+            utils.withGrid(10.5) - cameraPerson.x,
+            utils.withGrid(6) - cameraPerson.y,
+        );
     }
 
-    drawMiddleImage(ctx) {
-        ctx.drawImage(this.middleImage, 0, 0,);
+    drawMiddleImage(ctx, cameraPerson) {
+        ctx.drawImage(
+            this.middleImage,
+            utils.withGrid(10.5) - cameraPerson.x,
+            utils.withGrid(6) - cameraPerson.y,
+        );
     }
 
-    drawUpperImage(ctx) {
-        ctx.drawImage(this.upperImage, 0, 0,);
+    drawUpperImage(ctx, cameraPerson) {
+        ctx.drawImage(
+            this.upperImage,
+            utils.withGrid(10.5) - cameraPerson.x,
+            utils.withGrid(6) - cameraPerson.y,
+        );
     }
 }
 

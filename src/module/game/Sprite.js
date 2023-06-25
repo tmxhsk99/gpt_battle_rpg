@@ -1,4 +1,5 @@
 import shadowImage from "./images/characters/shadow.png";
+import {utils} from "./utils";
 
 export class Sprite {
 
@@ -75,9 +76,9 @@ export class Sprite {
     }
 
 
-    draw(ctx) {
-        const x = this.gameObject.x - 8;
-        const y = this.gameObject.y - 18;
+    draw(ctx, cameraPerson) {
+        const x = this.gameObject.x - 8 + utils.withGrid(10.5) - cameraPerson.x;
+        const y = this.gameObject.y - 18 + utils.withGrid(6) - cameraPerson.y;
 
         this.isShadowLoaded && ctx.drawImage(this.shadow, x, y);
 

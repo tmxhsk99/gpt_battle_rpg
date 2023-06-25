@@ -7,7 +7,7 @@ export class OverWorld {
         this.canvas = this.element.querySelector(".gameCanvas");
         this.ctx = this.canvas.getContext("2d");
         this.map = null;
-        this.canvas.width = 192;
+        this.canvas.width = 350;
         this.canvas.height = 192;
     }
 
@@ -15,26 +15,32 @@ export class OverWorld {
         const step = () => {
             // 캔버스를 지운다.
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            // 캔버스의 lower 레이어를 그린다.
-            this.map.drawLowerImage(this.ctx);
 
-            // 캔버스에 게임 오브젝트를 그린다.
+            const cameraPerson = this.map.gameObject.player;
+
+            // 게임 오브젝트를 업데이트 한다.
             Object.values(this.map.gameObject).forEach(object => {
                 object.update({
                     arrow: this.directionInput.direction,
                 });
-                object.sprite.draw(this.ctx);
+            })
+
+            // 캔버스의 lower 레이어를 그린다.
+            this.map.drawLowerImage(this.ctx,cameraPerson);
+
+            // 캔버스에 게임 오브젝트를 그린다.
+            Object.values(this.map.gameObject).forEach(object => {
+                object.sprite.draw(this.ctx,cameraPerson);
             });
             // 캔버스 middle 레이어를 그린다.
             // middleLayer는 없을 수도 있다.
             if(this.map.middleImage){
-                this.map.drawMiddleImage(this.ctx);
+                this.map.drawMiddleImage(this.ctx, cameraPerson);
             }
-
 
             // 캔버스의 upper 레이어를 그린다.
             if(this.map.upperImage){
-                this.map.drawUpperImage(this.ctx);
+                this.map.drawUpperImage(this.ctx, cameraPerson);
             }
 
             requestAnimationFrame(() => {
