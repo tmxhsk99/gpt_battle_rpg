@@ -8,6 +8,8 @@ import playerImage from "./images/characters/people/player.png";
 import npc1Image from "./images/characters/people/npc1.png";
 import npc2Image from "./images/characters/people/npc2.png";
 import npc3Image from "./images/characters/people/npc3.png";
+import {utils} from "./utils";
+import {Person} from "./Person";
 
 export class OverWorldMap {
 
@@ -42,15 +44,16 @@ window.OverWorldMap = {
         lowerSrc: myHome_1F_lower,
         upperSrc: myHome_1F_upper,
         gameObject: {
-            player: new GameObject({
-                x: 4,
-                y: 6,
+            player: new Person({
+                isPlayerControlled: true,
+                x: utils.withGrid(4),
+                y: utils.withGrid(6),
                 src: playerImage,
                 useShadow: true,
             }),
-            npc1: new GameObject({
-                x: 7,
-                y: 9,
+            npc1: new Person({
+                x: utils.withGrid(7),
+                y: utils.withGrid(9),
                 src: npc1Image,
                 useShadow: true,
             }),
@@ -63,21 +66,22 @@ window.OverWorldMap = {
         middleSrc: myHome_2F_middle,
         upperSrc: myHome_2F_upper,
         gameObject: {
-            player: new GameObject({
-                x: 3,
-                y: 5,
+            player: new Person({
+                isPlayerControlled: true,
+                x: utils.withGrid(3),
+                y: utils.withGrid(5),
                 src: playerImage,
                 useShadow: true,
             }),
-            npcA: new GameObject({
-                x: 9,
-                y: 6,
+            npcA: new Person({
+                x: utils.withGrid(9),
+                y: utils.withGrid(6),
                 src: npc2Image,
                 useShadow: true,
             }),
-            npcB: new GameObject({
-                x: 10,
-                y: 8,
+            npcB: new Person({
+                x: utils.withGrid(10),
+                y: utils.withGrid(8),
                 src: npc3Image,
                 useShadow: true,
             }),

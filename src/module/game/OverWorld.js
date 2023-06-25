@@ -1,4 +1,5 @@
 import { OverWorldMap } from "./OverWorldMap.js";
+import {DirectionInput} from "./DirectionInput";
 
 export class OverWorld {
     constructor(config) {
@@ -19,7 +20,9 @@ export class OverWorld {
 
             // 캔버스에 게임 오브젝트를 그린다.
             Object.values(this.map.gameObject).forEach(object => {
-                object.x += 0.02;
+                object.update({
+                    arrow: this.directionInput.direction,
+                });
                 object.sprite.draw(this.ctx);
             });
             // 캔버스 middle 레이어를 그린다.
@@ -37,6 +40,8 @@ export class OverWorld {
     }
     init() {
         this.map = new OverWorldMap(window.window.OverWorldMap.myHome2F);
+        this.directionInput = new DirectionInput();
+        this.directionInput.init();
         this.startGameLoop();
     }
 }
