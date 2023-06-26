@@ -1,4 +1,4 @@
-import { OverWorldMap } from "./OverWorldMap.js";
+import {OverWorldMap} from "./OverWorldMap.js";
 import {DirectionInput} from "./DirectionInput";
 
 export class OverWorld {
@@ -16,10 +16,10 @@ export class OverWorld {
             // 캔버스를 지운다.
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-            const cameraPerson = this.map.gameObject.player;
+            const cameraPerson = this.map.gameObjects.player;
 
             // 게임 오브젝트를 업데이트 한다.
-            Object.values(this.map.gameObject).forEach(object => {
+            Object.values(this.map.gameObjects).forEach(object => {
                 object.update({
                     arrow: this.directionInput.direction,
                     map: this.map,
@@ -27,20 +27,22 @@ export class OverWorld {
             })
 
             // 캔버스의 lower 레이어를 그린다.
-            this.map.drawLowerImage(this.ctx,cameraPerson);
+            this.map.drawLowerImage(this.ctx, cameraPerson);
 
-            // 캔버스에 게임 오브젝트를 그린다.
-            Object.values(this.map.gameObject).forEach(object => {
-                object.sprite.draw(this.ctx,cameraPerson);
+            // 캔버스에 게임 오브젝트를 그린다. 남쪽에 있는 오브젝트가 나중에 그지도록 정렬
+            Object.values(this.map.gameObjects).sort((a, b) => {
+                return a.y - b.y;
+            }).forEach(object => {
+                object.sprite.draw(this.ctx, cameraPerson);
             });
             // 캔버스 middle 레이어를 그린다.
             // middleLayer는 없을 수도 있다.
-            if(this.map.middleImage){
+            if (this.map.middleImage) {
                 this.map.drawMiddleImage(this.ctx, cameraPerson);
             }
 
             // 캔버스의 upper 레이어를 그린다.
-            if(this.map.upperImage){
+            if (this.map.upperImage) {
                 this.map.drawUpperImage(this.ctx, cameraPerson);
             }
 
@@ -51,9 +53,9 @@ export class OverWorld {
 
         step();
     }
+
     init() {
         this.map = new OverWorldMap(window.window.OverWorldMap.myHome1F);
-
         this.map.mountObjects();
 
         this.directionInput = new DirectionInput();

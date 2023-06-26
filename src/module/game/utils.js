@@ -5,21 +5,27 @@ export const utils = {
     asGridCoord(x,y){
         return `${x * 16},${y * 16}`;
     },
-    nexPosition(initialX, initialY, direction){
+    nexPosition(initialX, initialY, direction) {
         let x = initialX;
         let y = initialY;
         const size = 16;
         if (direction === "left") {
             x -= size;
-        }else if(direction ==="right") {
+        } else if (direction === "right") {
             x += size;
-        }else if(direction ==="up") {
+        } else if (direction === "up") {
             y -= size;
-        } else if(direction ==="down") {
+        } else if (direction === "down") {
             y += size;
         }
         return {x, y}
-    }
+    },
+    emitEvent(name, detail) {
+        const event = new CustomEvent(name, {
+            detail: detail,
+        });
+        document.dispatchEvent(event);
+    },
 
 }
 
