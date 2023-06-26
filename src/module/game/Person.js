@@ -16,31 +16,50 @@ export class Person extends GameObject {
     }
 
     update(state) {
-        this.updatePosition();
-        this.updatedSprite(state);
+        if (this.movingProgressRemaining > 0) {
+            this.updatePosition();
+        } else {
 
-        if (this.isPlayerControlled && this.movingProgressRemaining === 0 && state.arrow) {
-            this.direction = state.arrow;
+
+            //Case: 키보드를 누르고 방향키를 누른상태
+            if (this.isPlayerControlled && state.arrow) {
+                this.startBehavior(state, {
+                    type: "walk",
+                    direction: state.arrow,
+                })
+            }
+            this.updatedSprite(state);
+        }
+    }
+
+    startBehavior(state, behavior) {
+        // 행동을 체크한다
+        this.direction = behavior.direction;
+        // 행동이 걷기인경우 이동할 수 있는지 체크한다
+        if (behavior.type === "walk") {
+            if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
+                return;
+            }
+
+            state.map.moveWall(this.x, this.y, this.direction);
             this.movingProgressRemaining = 16;
         }
+
     }
 
     updatePosition() {
-        if (this.movingProgressRemaining > 0) {
-            const [property, change] = this.directionUpdate[this.direction];
-            this[property] += change;
-            this.movingProgressRemaining -= 1;
-        }
+        const [property, change] = this.directionUpdate[this.direction];
+        this[property] += change;
+        this.movingProgressRemaining -= 1;
     }
 
-    updatedSprite(state) {
-        if (this.isPlayerControlled && this.movingProgressRemaining === 0 && !state.arrow) {
-            this.sprite.setAnimation("idle-" + this.direction);
-            return;
-        }
+    updatedSprite() {
 
         if (this.movingProgressRemaining > 0) {
             this.sprite.setAnimation("walk-" + this.direction);
+            return;
         }
+        this.sprite.setAnimation("idle-" + this.direction);
+
     }
 }

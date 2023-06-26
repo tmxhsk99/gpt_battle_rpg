@@ -15,6 +15,7 @@ export class OverWorldMap {
 
     constructor(config) {
         this.gameObject = config.gameObject;
+        this.walls = config.walls || {};
 
         this.lowerImage = new Image();
         this.lowerImage.src = config.lowerSrc;
@@ -54,6 +55,31 @@ export class OverWorldMap {
             utils.withGrid(6) - cameraPerson.y,
         );
     }
+
+    isSpaceTaken(currentX, currentY, direction) {
+        const {x, y} = utils.nexPosition(currentX, currentY, direction);
+        return this.walls[`${x},${y}`] || false;
+    }
+
+    mountObjects() {
+        Object.values(this.gameObject).forEach(object => {
+            object.mount(this);
+        })
+    }
+
+    addWall(x, y) {
+        this.walls[`${x},${y}`] = true;
+    }
+
+    removeWall(x, y) {
+        delete this.walls[`${x},${y}`];
+    }
+
+    moveWall(wasX, wasyY, direction) {
+        this.removeWall(wasX, wasyY)
+        const {x, y} = utils.nexPosition(wasX, wasyY, direction);
+        this.addWall(x, y);
+    }
 }
 
 window.OverWorldMap = {
@@ -74,9 +100,13 @@ window.OverWorldMap = {
                 src: npc1Image,
                 useShadow: true,
             }),
-
-
-        }
+        },
+        walls: {
+            [utils.asGridCoord(5, 6)]: true,
+            [utils.asGridCoord(6, 6)]: true,
+            [utils.asGridCoord(5, 7)]: true,
+            [utils.asGridCoord(6, 7)]: true,
+        },
     },
     myHome2F: {
         lowerSrc: myHome_2F_lower,

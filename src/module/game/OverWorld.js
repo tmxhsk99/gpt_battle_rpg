@@ -22,6 +22,7 @@ export class OverWorld {
             Object.values(this.map.gameObject).forEach(object => {
                 object.update({
                     arrow: this.directionInput.direction,
+                    map: this.map,
                 });
             })
 
@@ -52,8 +53,12 @@ export class OverWorld {
     }
     init() {
         this.map = new OverWorldMap(window.window.OverWorldMap.myHome1F);
+
+        this.map.mountObjects();
+
         this.directionInput = new DirectionInput();
         this.directionInput.init();
+
         this.startGameLoop();
     }
 }

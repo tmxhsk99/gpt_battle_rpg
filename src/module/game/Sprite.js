@@ -16,13 +16,11 @@ export class Sprite {
         //Shadow
         this.shadow = new Image();
         this.useShadow = config.useShadow || false;
-        console.log("useShadow", this.useShadow);
         if (this.useShadow) {
             this.shadow.src = shadowImage;
         }
         this.shadow.onload = () => {
             this.isShadowLoaded = true;
-            console.log("Shadow Loaded");
         }
 
 
@@ -48,7 +46,6 @@ export class Sprite {
     }
 
     get frame() {
-        console.log(this.currentAnimation, this.currentAnimationFrame)
         return this.animations[this.currentAnimation][this.currentAnimationFrame];
     }
 
