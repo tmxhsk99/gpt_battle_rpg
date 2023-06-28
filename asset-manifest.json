@@ -1,16 +1,13 @@
 {
-  "main.css": "/gpt_battle_rpg/static/css/main.643ca3e0.chunk.css",
-  "main.js": "/gpt_battle_rpg/static/js/main.301ba6aa.chunk.js",
-  "main.js.map": "/gpt_battle_rpg/static/js/main.301ba6aa.chunk.js.map",
-  "static/js/1.3c11774c.chunk.js": "/gpt_battle_rpg/static/js/1.3c11774c.chunk.js",
-  "static/js/1.3c11774c.chunk.js.map": "/gpt_battle_rpg/static/js/1.3c11774c.chunk.js.map",
-  "static/js/2.6422faee.chunk.js": "/gpt_battle_rpg/static/js/2.6422faee.chunk.js",
-  "static/js/2.6422faee.chunk.js.map": "/gpt_battle_rpg/static/js/2.6422faee.chunk.js.map",
-  "runtime~main.js": "/gpt_battle_rpg/static/js/runtime~main.2946f705.js",
-  "runtime~main.js.map": "/gpt_battle_rpg/static/js/runtime~main.2946f705.js.map",
-  "static/media/logo.svg": "/gpt_battle_rpg/static/media/logo.06e73328.svg",
-  "static/css/main.643ca3e0.chunk.css.map": "/gpt_battle_rpg/static/css/main.643ca3e0.chunk.css.map",
-  "index.html": "/gpt_battle_rpg/index.html",
-  "precache-manifest.7266c9e5de6bf9cbdaeb060cbccb13b0.js": "/gpt_battle_rpg/precache-manifest.7266c9e5de6bf9cbdaeb060cbccb13b0.js",
-  "service-worker.js": "/gpt_battle_rpg/service-worker.js"
+  "files": {
+    "main.css": "/gpt_battle_rpg/static/css/main.b910efc7.css",
+    "main.js": "/gpt_battle_rpg/static/js/main.234551a6.js",
+    "index.html": "/gpt_battle_rpg/index.html",
+    "main.b910efc7.css.map": "/gpt_battle_rpg/static/css/main.b910efc7.css.map",
+    "main.234551a6.js.map": "/gpt_battle_rpg/static/js/main.234551a6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b910efc7.css",
+    "static/js/main.234551a6.js"
+  ]
 }
