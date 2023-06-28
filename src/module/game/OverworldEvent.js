@@ -1,3 +1,6 @@
+import {TextMessage} from "./TextMessage";
+import {utils} from "./utils";
+
 export class OverworldEvent {
 
     constructor({map, event}) {
@@ -43,6 +46,27 @@ export class OverworldEvent {
         }
 
         document.addEventListener("PersonWalkingComplete", completeHandler);
+    }
+
+    textMessage(resolve) {
+        if (this.event.faceForPlayer) {
+            const obj = this.map.gameObjects[this.event.faceForPlayer];
+            obj.direction = utils.oppositeDirection(this.map.gameObjects["player"].direction);
+        }
+
+        const message = new TextMessage({
+            text: this.event.text,
+            onComplete: () => {
+                resolve();
+            }
+        });
+        message.init(document.querySelector(".GameContainer"));
+    }
+
+    changeMap(resolve) {
+        console.log(window.OverworldMaps[this.event.map])
+        this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
+        resolve();
     }
 
     init() {

@@ -11,12 +11,15 @@ import {utils} from "./utils";
 import {Person} from "./Person";
 import {OverworldEvent} from "./OverworldEvent";
 
-export class OverWorldMap {
+export class OverworldMap {
 
     constructor(config) {
+        this.overworld = config.overworld || null;
         this.gameObjects = config.gameObjects;
         this.walls = config.walls || {};
-        this.isCutscenePlaying = config.isCutscenePlaying|| false;
+        this.isCutscenePlaying = config.isCutscenePlaying || false;
+
+        this.cutsceneSpaces = config.cutsceneSpaces || {};
 
         this.lowerImage = new Image();
         this.lowerImage.src = config.lowerSrc;
@@ -63,12 +66,12 @@ export class OverWorldMap {
     }
 
     mountObjects() {
-      Object.keys(this.gameObjects).forEach(key => {
-        let object = this.gameObjects[key];
-        object.id = key;
-        object.mount(this);
+        Object.keys(this.gameObjects).forEach(key => {
+            let object = this.gameObjects[key];
+            object.id = key;
+            object.mount(this);
 
-      })
+        })
     }
 
     /**
@@ -79,7 +82,7 @@ export class OverWorldMap {
     async startCutscene(events) {
         this.isCutscenePlaying = true;
 
-        for(let i = 0; i < events.length; i++){
+        for (let i = 0; i < events.length; i++) {
             const eventHandler = new OverworldEvent({
                 event: events[i],
                 map: this,
@@ -88,6 +91,33 @@ export class OverWorldMap {
         }
 
         this.isCutscenePlaying = false;
+
+        // NPC가 유휴 동작을 하도록 재설정합니다.
+        Object.values(this.gameObjects).forEach(object => {
+            object.doBehaviorEvent(this);
+        });
+    }
+
+    checkForActionCutscene() {
+        const player = this.gameObjects["player"];
+        const nextCoords = utils.nexPosition(player.x, player.y, player.direction);
+        const match = Object.values(this.gameObjects).find(object => {
+            return `${object.x},${object.y}` === `${nextCoords.x},${nextCoords.y}`
+        });
+        if (!this.isCutscenePlaying && match && match.talking.length) {
+            void this.startCutscene(match.talking[0].events);
+        }
+    }
+
+    /**
+     * 플레이어가 이동할때마다 컷신이벤트를 체크하여 실행한다.
+     */
+    checkForFootstepCutscene(){
+        const player = this.gameObjects["player"];
+        const match = this.cutsceneSpaces[`${player.x},${player.y}`];
+        if(!this.isCutscenePlaying && match ){
+            this.startCutscene(match[0].events);
+        }
     }
 
     addWall(x, y) {
@@ -98,22 +128,22 @@ export class OverWorldMap {
         delete this.walls[`${x},${y}`];
     }
 
-    moveWall(wasX, wasyY, direction) {
-        this.removeWall(wasX, wasyY)
-        const {x, y} = utils.nexPosition(wasX, wasyY, direction);
+    moveWall(wasX, wasY, direction) {
+        this.removeWall(wasX, wasY)
+        const {x, y} = utils.nexPosition(wasX, wasY, direction);
         this.addWall(x, y);
     }
 }
 
-window.OverWorldMap = {
+window.OverworldMaps = {
     myHome1F: {
         lowerSrc: myHome_1F_lower,
         upperSrc: myHome_1F_upper,
         gameObjects: {
             player: new Person({
                 isPlayerControlled: true,
-                x: utils.withGrid(4),
-                y: utils.withGrid(6),
+                x: utils.withGrid(7),
+                y: utils.withGrid(5),
                 src: playerImage,
                 useShadow: true,
             }),
@@ -129,19 +159,20 @@ window.OverWorldMap = {
                     {type: "walk", direction: "up", time: 300},
                     {type: "walk", direction: "down", time: 300},
                 ],
+                talking: [
+                    {
+                        events: [
+                            {type: "textMessage", text: "안녕하세요 이곳은 처음이신가요?", faceForPlayer: "npcA"},
+                            {type: "textMessage", text: "그럼 잘 즐기다 가세요!"},
+                        ]
+                    }
+                ]
             }),
             npcB: new Person({
                 x: utils.withGrid(10),
                 y: utils.withGrid(7),
                 src: npc2Image,
                 useShadow: true,
-                behaviorLoop: [
-                    {type: "walk", direction: "left"},
-                    {type: "stand", direction: "up", time: 800},
-                    {type: "walk", direction: "up"},
-                    {type: "walk", direction: "right"},
-                    {type: "walk", direction: "down"},
-                ],
             }),
         },
         walls: {
@@ -149,24 +180,53 @@ window.OverWorldMap = {
             [utils.asGridCoord(6, 6)]: true,
             [utils.asGridCoord(5, 7)]: true,
             [utils.asGridCoord(6, 7)]: true,
+            [utils.asGridCoord(10, 4)]: true,
         },
+        cutsceneSpaces: {// 특정 좌표시 발생 이벤트
+            [utils.asGridCoord(9, 4)]: [
+                {
+                    events: [
+                        {who: "npcB", type: "walk", direction: "up"},
+                        {who: "npcB", type: "walk", direction: "up"},
+                        {who: "npcB", type: "stand", direction: "up", time: 500},
+                        {type: "textMessage", text: "내 피규어에 손대지마!!"},
+                        {who: "player", type: "walk", direction: "down"},
+                        {who: "npcB", type: "walk", direction: "down"},
+                        {who: "npcB", type: "walk", direction: "down"},
+                    ]
+                }
+            ],
+            [utils.asGridCoord(10, 5)]: [
+                {
+                    events: [
+                        {who: "npcB", type: "walk", direction: "up"},
+                        {who: "npcB", type: "stand", direction: "up", time: 500},
+                        {type: "textMessage", text: "내 피규어에 손대지마!!"},
+                        {who: "player", type: "walk", direction: "left"},
+                        {who: "npcB", type: "walk", direction: "down"},
+                    ]
+                }
+            ],
+            [utils.asGridCoord(7, 4)]: [ // 맵 이동 이벤트
+                {
+                    events: [
+                        {type: "changeMap", map: "myHome2F"}
+                    ]
+                }
+            ]
+        }
     },
     myHome2F: {
         lowerSrc: myHome_2F_lower,
         middleSrc: myHome_2F_middle,
         upperSrc: myHome_2F_upper,
-        gameObject: {
+        gameObjects: {
             player: new Person({
+                direction: "up",
                 isPlayerControlled: true,
-                x: utils.withGrid(3),
-                y: utils.withGrid(5),
+                x: utils.withGrid(5),
+                y: utils.withGrid(9),
                 src: playerImage,
-                useShadow: true,
-            }),
-            npcA: new Person({
-                x: utils.withGrid(9),
-                y: utils.withGrid(6),
-                src: npc2Image,
                 useShadow: true,
             }),
             npcB: new Person({
@@ -174,6 +234,13 @@ window.OverWorldMap = {
                 y: utils.withGrid(8),
                 src: npc3Image,
                 useShadow: true,
+                talking: [
+                     {
+                         events: [
+                             {type: "textMessage", text: "뭘 봐? \n내 독서를 방해하지마!", faceForPlayer: "npcB"},
+                         ]
+                     }
+                 ]
             }),
         }
     },

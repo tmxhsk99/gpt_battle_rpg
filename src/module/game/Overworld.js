@@ -1,7 +1,8 @@
-import {OverWorldMap} from "./OverWorldMap.js";
 import {DirectionInput} from "./DirectionInput";
+import {KeyPressListener} from "./KeyPressListener";
+import {OverworldMap} from "./OverworldMap";
 
-export class OverWorld {
+export class Overworld {
     constructor(config) {
         this.element = config.element;
         this.canvas = this.element.querySelector(".gameCanvas");
@@ -54,13 +55,48 @@ export class OverWorld {
         step();
     }
 
-    init() {
-        this.map = new OverWorldMap(window.window.OverWorldMap.myHome1F);
+    bindActionInput() {
+        new KeyPressListener("Enter", () => {
+            this.map.checkForActionCutscene();
+        });
+
+    }
+
+    bindPlayerPositionCheck() {
+        document.addEventListener("PersonWalkingComplete", e => {
+            if (e.detail.whoId === "player") {
+                // player 위치 변경시 맵 이벤트를 체크한다.
+                this.map.checkForFootstepCutscene();
+            }
+        })
+    }
+
+    startMap(mapConfig) {
+        this.map = new OverworldMap(mapConfig);
+        console.log(this.map.gameObjects);
+        this.map.overworld = this;
         this.map.mountObjects();
+    }
+
+    init() {
+        this.startMap(window.OverworldMaps.myHome1F);
+        this.bindActionInput();
+        this.bindPlayerPositionCheck()
 
         this.directionInput = new DirectionInput();
         this.directionInput.init();
-
+        // 맵 이벤트 바인딩
+        /*        void this.map.startCutscene([
+                   {who: "player", type: "walk", direction: "down"},
+                    {who: "player", type: "walk", direction: "down"},
+                    {who: "player", type: "stand", direction: "down", time: 200},
+                    {who: "npcA", type: "walk", direction: "up"},
+                    {who: "npcA", type: "walk", direction: "left"},
+                    {who: "npcA", type: "walk", direction: "left"},
+                    {who: "player", type: "stand", direction: "right", time: 200},
+                    {type: "textMessage", text: "잠깐 나가기 전에 배틀이야!\n준비되었어?"},
+                ])*/
         this.startGameLoop();
+
     }
 }

@@ -18,6 +18,8 @@ export class GameObject {
 
         this.behaviorLoop = config.behaviorLoop || [];
         this.behaviorLoopIndex = 0;
+
+        this.talking = config.talking || [];
     }
 
     mount(map) {
@@ -25,7 +27,7 @@ export class GameObject {
         map.addWall(this.x, this.y);
 
         setTimeout(() => {
-             this.doBehaviorEvent(map);
+           void this.doBehaviorEvent(map);
         }, 10);
     }
 
@@ -34,9 +36,8 @@ export class GameObject {
     }
 
     async doBehaviorEvent(map) {
-        console.log("doBehaviorEvent", map);
         // 컷신이 실행되는 경우 이벤트를 멈춘다.
-        if(map.isCutscenePlaying || this.behaviorLoop.length === 0){
+        if(map.isCutscenePlaying || this.behaviorLoop.length === 0 || this.isStanding){
             return;
         }
         let eventConfig = this.behaviorLoop[this.behaviorLoopIndex];

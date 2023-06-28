@@ -1,15 +1,16 @@
 import "./GameContainer.css"
-import "../style.css"
+import "../module/game/style/global.css"
+import "../module/game/style/TextMessage.css"
 import React, {useEffect} from "react";
 import {useRef} from "react";
 
-import {OverWorld} from "../module/game/OverWorld";
+import {Overworld} from "../module/game/Overworld";
 
 const GameContainer = () => {
     const gameContainer = useRef(null);
 
     useEffect(() => {
-        const overWorld = new OverWorld({
+        const overWorld = new Overworld({
             element: gameContainer.current,
         });
         overWorld.init();

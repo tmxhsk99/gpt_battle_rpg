@@ -1,36 +1,38 @@
 export class DirectionInput {
     constructor() {
-        this.heldDirection = [];
+        this.heldDirections = [];
+
         this.map = {
             "ArrowUp": "up",
-            "ArrowDown": "down",
-            "ArrowLeft": "left",
-            "ArrowRight": "right",
             "KeyW": "up",
+            "ArrowDown": "down",
             "KeyS": "down",
+            "ArrowLeft": "left",
             "KeyA": "left",
+            "ArrowRight": "right",
             "KeyD": "right",
         }
     }
 
     get direction() {
-        return this.heldDirection[0];
+        return this.heldDirections[0];
     }
 
     init() {
-        document.addEventListener("keydown", (e) => {
-
+        document.addEventListener("keydown", e => {
             const dir = this.map[e.code];
-            if (dir && this.heldDirection.indexOf(dir) === -1) {
-                this.heldDirection.unshift(dir);
+            if (dir && this.heldDirections.indexOf(dir) === -1) {
+                this.heldDirections.unshift(dir);
             }
         });
-        document.addEventListener("keyup", (e) => {
+        document.addEventListener("keyup", e => {
             const dir = this.map[e.code];
-            const index = this.heldDirection.indexOf(dir);
+            const index = this.heldDirections.indexOf(dir);
             if (index > -1) {
-                this.heldDirection.splice(index, 1);
+                this.heldDirections.splice(index, 1);
             }
-        });
+        })
+
     }
+
 }

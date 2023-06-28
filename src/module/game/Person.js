@@ -5,7 +5,7 @@ export class Person extends GameObject {
     constructor(config) {
         super(config);
         this.movingProgressRemaining = 0;
-
+        this.isStanding = false;
         this.isPlayerControlled = config.isPlayerControlled || false;
 
         this.directionUpdate = {
@@ -20,15 +20,14 @@ export class Person extends GameObject {
         if (this.movingProgressRemaining > 0) {
             this.updatePosition();
         } else {
-
             //Case: 키보드를 누르고 방향키를 누른상태
-            if (state.map.isCutscenePlaying && this.isPlayerControlled && state.arrow) {
+            if (!state.map.isCutscenePlaying && this.isPlayerControlled && state.arrow) {
                 this.startBehavior(state, {
                     type: "walk",
                     direction: state.arrow,
                 })
             }
-            this.updatedSprite(state);
+            this.updateSprite(state);
         }
     }
 
@@ -47,14 +46,16 @@ export class Person extends GameObject {
 
             state.map.moveWall(this.x, this.y, this.direction);
             this.movingProgressRemaining = 16;
-            this.updatedSprite(this.state);
+            this.updateSprite(this.state);
         }
 
         if (behavior.type === "stand") {
+            this.isStanding = true;
             setTimeout(() => {
                 utils.emitEvent("PersonStandComplete", {
                     whoId: this.id,
-                })
+                });
+                this.isStanding = false;
             }, behavior.time);
         }
     }
@@ -65,15 +66,14 @@ export class Person extends GameObject {
         this.movingProgressRemaining -= 1;
 
         if (this.movingProgressRemaining === 0) {
-            // 컫기가 끝남
+            // 걷기가 끝남
             utils.emitEvent("PersonWalkingComplete", {
-                whoId: this.id,
+                whoId: this.id
             })
         }
     }
 
-    updatedSprite() {
-
+    updateSprite() {
         if (this.movingProgressRemaining > 0) {
             this.sprite.setAnimation("walk-" + this.direction);
             return;
