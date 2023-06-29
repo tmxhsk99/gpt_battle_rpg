@@ -16,6 +16,8 @@
 .TextMessage_p {
   margin: 5px;
   font-size: 12px;
+  text-align: left;
+
 }
 .TextMessage_button {
   margin: 0;

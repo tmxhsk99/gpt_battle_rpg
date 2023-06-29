@@ -73,7 +73,6 @@ export class Overworld {
 
     startMap(mapConfig) {
         this.map = new OverworldMap(mapConfig);
-        console.log(this.map.gameObjects);
         this.map.overworld = this;
         this.map.mountObjects();
     }

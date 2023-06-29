@@ -1,6 +1,7 @@
 import "./GameContainer.css"
 import "../module/game/style/global.css"
 import "../module/game/style/TextMessage.css"
+import "../module/game/style/SceneTransition.css"
 import React, {useEffect} from "react";
 import {useRef} from "react";
 
