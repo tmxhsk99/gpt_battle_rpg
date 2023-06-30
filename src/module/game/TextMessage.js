@@ -16,21 +16,21 @@ export class TextMessage {
 
         this.element.innerHTML = (
             `<p id="TextMessage_p"  class="TextMessage_p"></p>
-            <button class ="TextMessage_button"><span class="blink"></span></button>`
+            <button class ="TextMessage_button"></button>`
 
         )
 
 
-        const content = this.text;
+
         const TextMessage_p = this.element.querySelector("#TextMessage_p"); // ID를 기반으로 접근
         let sentence = this.text;
         let txtIdx = 0;
 
         function typing() {
             let txt = sentence[txtIdx++];
-            if (txt == undefined) return;
+            if (txt === undefined) return;
             TextMessage_p.innerHTML += txt === "\n" ? "<br/>": txt;
-            if (txtIdx > content.length) {
+            if (txtIdx > sentence.length) {
                 txtIdx = 0;
             } else {
                 setTimeout(typing, 35);
