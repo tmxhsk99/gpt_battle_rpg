@@ -5,9 +5,9 @@
     outline: 1px solid #fff;
     margin: 0 auto;
     transform: scale(3) translateY(50%);
+    overflow: hidden;
 }
 
 .GameContainer canvas {
-
     image-rendering: pixelated;
 }
