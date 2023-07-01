@@ -1,0 +1,81 @@
+.Battle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url(../images/battle/map/defaultBattleBackground.png);
+    background-size: cover;
+    image-rendering: pixelated;
+}
+
+.Battle_player, .Battle_enemy {
+    position: absolute;
+    transform: scale(1.5);
+    width: 56px;
+    height: 56px;
+    overflow: hidden;
+}
+
+.Battle_player img, .Battle_enemy img {
+    pointer-events: none;
+}
+
+
+@keyframes InLeftBattle {
+    0% {
+        z-index: 10;
+        position: absolute;
+        width: 56px;
+        height: 56px;
+        overflow: hidden;
+        filter: grayscale(100%);
+        transform: scale(1.5) translateX(-250px);
+    }
+    100% {
+        z-index: 10;
+        filter: grayscale(100%);
+        transform: scale(1.5) translateX(0);
+        top: 12px;
+        right: 13px;
+        position: absolute;
+        width: 56px;
+        height: 56px;
+        overflow: hidden;
+    }
+}
+@keyframes InRightBattle {
+    0% {
+        z-index: 20;
+        position: absolute;
+        bottom: 46px;
+        left: 6px;
+        overflow: hidden;
+        filter: grayscale(100%);
+        transform: scale(1.5) translateX(250px);
+    }
+    100% {
+        z-index: 20;
+        filter: grayscale(100%);
+        transform: scale(1.5) translateX(0);
+        bottom: 46px;
+        left: 6px;
+        position: absolute;
+        width: 56px;
+        height: 56px;
+        overflow: hidden;
+    }
+}
+.Battle_player {
+    bottom: 46px;
+    left: 6px;
+    animation: InRightBattle 2500ms;
+    animation-timing-function: linear;
+}
+
+.Battle_enemy {
+    top: 12px;
+    right: 13px;
+    animation: InLeftBattle 2500ms;
+    animation-timing-function: linear;
+}
