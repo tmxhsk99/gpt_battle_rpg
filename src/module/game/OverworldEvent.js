@@ -1,6 +1,7 @@
 import {TextMessage} from "./TextMessage";
 import {utils} from "./utils";
 import {SceneTransition} from "./SceneTransition";
+import {Battle} from "./Battle/Battle";
 
 export class OverworldEvent {
 
@@ -64,6 +65,10 @@ export class OverworldEvent {
         message.init(document.querySelector(".GameContainer"));
     }
 
+    /**
+     * 맵 변경 이벤트 처리
+     * @param resolve
+     */
     changeMap(resolve) {
         const sceneTransition = new SceneTransition();
         sceneTransition.init(document.querySelector(".GameContainer"), () => {
@@ -75,6 +80,19 @@ export class OverworldEvent {
         })
     }
 
+    /**
+     * 배틀 시작시 이벤트 처리
+     * @param resolve
+     */
+    battle(resolve){
+        const battle = new Battle({
+            onComplete: () => {
+                resolve();
+            }
+        })
+        battle.init(document.querySelector(".GameContainer"));
+    }
+    
     init() {
         return new Promise((resolve) => {
             this[this.event.type](resolve);

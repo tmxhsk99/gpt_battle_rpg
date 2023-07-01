@@ -84,7 +84,7 @@ export class Overworld {
 
         this.directionInput = new DirectionInput();
         this.directionInput.init();
-        // 맵 이벤트 바인딩
+        // 맵 이벤트 바인딩 예시
         /*        void this.map.startCutscene([
                    {who: "player", type: "walk", direction: "down"},
                     {who: "player", type: "walk", direction: "down"},
@@ -94,7 +94,12 @@ export class Overworld {
                     {who: "npcA", type: "walk", direction: "left"},
                     {who: "player", type: "stand", direction: "right", time: 200},
                     {type: "textMessage", text: "잠깐 나가기 전에 배틀이야!\n준비되었어?"},
-                ])*/
+        ])*/
+
+        // 배틀 테스트을 위한 시작 바인딩
+        void this.map.startCutscene([
+            {type:"battle"}
+        ]);
         this.startGameLoop();
 
     }
