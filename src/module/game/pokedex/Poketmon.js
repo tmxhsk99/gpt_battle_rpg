@@ -3,7 +3,7 @@ import {nautureType} from "../Content/PoketmonConst";
 
 export class Poketmon {
 
-    constructor(pokedexNumber, level, individualValue, effort, nature,sex) {
+    constructor(pokedexNumber, level, individualValue, effort, nature, sex, xp) {
         const defaultLevel = 50;
         this._findPoketmon = pokedex[pokedexNumber];
         this._name = this._findPoketmon.name;
@@ -20,9 +20,10 @@ export class Poketmon {
         this._c = this.getRealSpAttack();
         this._d = this.getRealSpDefense();
         this._s = this.getRealSpeed();
-        this._xp = 0;
+        this._xp = xp ? xp : 0;
+        this._maxXp = 4 * Math.pow(this._level, 3);
         this._status = window.PoketmonStatus.정상;
-        this._sex = sex ? sex :this._findPoketmon.sex[0];
+        this._sex = sex ? sex : this._findPoketmon.sex[0];
     }
 
     get sex() {

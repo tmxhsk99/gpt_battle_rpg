@@ -50,8 +50,8 @@
 
 .Combatant .Combatant_name {
     position: absolute;
-    left: 14px;
-    top: -3px;
+    left: 30px;
+    top: -4px;
     white-space: nowrap;
     color: black;
     font-size: 5px;
@@ -60,7 +60,7 @@
 
 .CombatantEnemy .Combatant_name {
     position: absolute;
-    left: 10px;
+    left: 30px;
     top: 4px;
     white-space: nowrap;
     color: black;
@@ -129,6 +129,14 @@
     background: rgba(0, 0, 0, 0.8);
     color: white;
     margin: 0;
+}
+
+.Combatant .Player_Hp_Number {
+    position: absolute;
+    font-family: "NeoDunggeunmo";
+    font-size: 10px;
+    left: 33px;
+    top: 5px;
 }
 
 .Combatant_status[data-status="saucy"] {

@@ -14,10 +14,14 @@ export class Battle {
                 new Poketmon(149),
                 "enemy"
                 , this),
-/*            "enemy2": new Combatant(
+            "enemy2": new Combatant(
                 new Poketmon(991)
                 , "enemy"
-                , this),*/
+                , this),
+        }
+        this.activeCombatants = {
+            player: "player1",
+            enemy: "enemy1",
         }
     }
 
