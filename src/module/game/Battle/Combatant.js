@@ -1,6 +1,7 @@
 import lvImg from "../images/ui/lv.png";
+
 export class Combatant {
-    constructor(poketmonInfo,team, battle) {
+    constructor(poketmonInfo, team, battle) {
         this.poketmon = poketmonInfo;
         this.team = team;
         this.battle = battle;
@@ -9,7 +10,7 @@ export class Combatant {
     createElement() {
 
         this.hudElement = document.createElement('div');
-        this.assignTeamSpecificClass(this.hudElement,this.team);
+        this.assignTeamSpecificClass(this.hudElement, this.team);
         const imgPokemonImgSrc = this.getPokemonImageSource(this.team);
 
         this.hudElement.setAttribute("data-combatant", this.id);
@@ -23,15 +24,13 @@ export class Combatant {
           </p>
             <img class="Combatant_character" alt="${this.poketmon.name}" src="${imgPokemonImgSrc}" />
           </div>
-          <svg viewBox="0 0 26 3" class="Combatant_life-container">
-            <rect x=0 y=0 width="100%" height=1 fill="#82ff71" />
-            <rect x=0 y=1 width="100%" height=2 fill="#3ef126" />
+          <svg viewBox="0 0 48 3" class="Combatant_life-container">
+            <rect x=0 y=1 width="100%" height=2 fill="#00B800"/>
           </svg>
-          <svg viewBox="0 0 26 2" class="Combatant_xp-container">
-            <rect x=0 y=0 width="100%" height=1 fill="#ffd76a" />
-            <rect x=0 y=1 width="100%" height=1 fill="#ffc934" />
+          <svg viewBox="0 0 48 2" class="Combatant_xp-container">     
+            <rect x=0 y=1 width="100%" height=2 fill="#2088F8" />
           </svg>
-          <p class="Combatant_status">${this.poketmon.status}</p>
+          ${this.poketmon.status === "정상" ? `` : `<p class="Combatant_status">${this.poketmon.status}</p>`}
         `);
 
     }
@@ -41,10 +40,10 @@ export class Combatant {
      * @param element
      * @param teamType
      */
-    assignTeamSpecificClass(element, teamType){
-        if(teamType === "player"){
+    assignTeamSpecificClass(element, teamType) {
+        if (teamType === "player") {
             element.classList.add('Combatant');
-        }else{
+        } else {
             element.classList.add('CombatantEnemy');
         }
     }
@@ -56,12 +55,16 @@ export class Combatant {
      */
     getPokemonImageSource(teamType) {
         let resultImgSrc = null;
-        if(teamType === "player"){
+        if (teamType === "player") {
             resultImgSrc = this.poketmon.backSrc;
-        }else{
+        } else {
             resultImgSrc = this.poketmon.frontSrc;
         }
         return resultImgSrc;
+    }
+
+    update(change) {
+
     }
 
     init(container) {
