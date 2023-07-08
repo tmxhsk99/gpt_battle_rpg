@@ -1,5 +1,4 @@
 import {pokedex} from "./PokedexData";
-import {nautureType} from "../Content/PoketmonConst";
 
 export class Poketmon {
 

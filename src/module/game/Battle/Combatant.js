@@ -31,7 +31,7 @@ export class Combatant {
 
         this.hudElement.innerHTML = (`
           <p class="Combatant_name"></p>
-            <img class="Combatant_character" alt="${this.poketmon.name}" src="${imgPokemonImgSrc}" />
+            
             ${this.team === "player" ? `<p class="Player_Hp_Number"></p>` : ``}
             
           <svg viewBox="0 0 48 3" class="Combatant_life-container">
@@ -44,6 +44,11 @@ export class Combatant {
           
           ${this.poketmon.status === "정상" ? `` : `<p class="Combatant_status">${this.poketmon.status}</p>`}
         `);
+        this.poketmonElement = document.createElement("img");
+        this.poketmonElement.classList.add("Combatant_character");
+        this.poketmonElement.setAttribute("src", imgPokemonImgSrc );
+        this.poketmonElement.setAttribute("alt", this.poketmon.name );
+        this.poketmonElement.setAttribute("data-team", this.team );
 
         this.hpFills = this.hudElement.querySelectorAll(".Combatant_life-container > rect");
         this.xpFills = this.hudElement.querySelectorAll(".Combatant_xp-container > rect");
@@ -78,8 +83,17 @@ export class Combatant {
         return resultImgSrc;
     }
 
-    update(changes = {}) {
+    /**
+     * 포켓몬 배틀시 상태 업데이트
+     */
+    stateUpdate({hp}){
+        if(hp){
+            this.poketmon._currentHp = hp;
+        }
+    }
 
+    update(changes = {}) {
+        this.stateUpdate(changes);
         this.hudElement.setAttribute("data-active", this.isActive);
         //level 업데이트
         this.hudElement.querySelector(".Combatant_name").innerHTML =
@@ -98,6 +112,7 @@ export class Combatant {
     init(container) {
         this.createElement();
         container.appendChild(this.hudElement);
+        this.hudElement.appendChild(this.poketmonElement);
         this.update();
     }
 }

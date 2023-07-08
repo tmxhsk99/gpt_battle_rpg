@@ -20,7 +20,7 @@ export const pokedex = {
         sampleEffort: [180, 204, 4, 0, 4, 116],
         sampleNature: window.PoketmonNatureType.고집,
         sampleItem: "생명의구슬",
-        sampleSkill: ["신속", "용의춤", "지진", "불꽃펀치"],
+        sampleSkill: ["신속", "용의춤", "지진", "테라버스트"],
         sampleTera: window.PoketmonType.노말,
     },
     991: {

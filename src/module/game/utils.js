@@ -41,6 +41,14 @@ export const utils = {
         } else if (direction === "down") {
             return "up";
         }
-    }
+    },
+    wait(ms) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve()
+        }, ms)
+      })
+    },
+
 }
 

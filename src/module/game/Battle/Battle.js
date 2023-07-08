@@ -2,6 +2,8 @@ import battlePlayer from "../images/battle/battle_user.png";
 import battleEnemy from "../images/battle/npc/battle_npc2.png";
 import {Combatant} from "./Combatant";
 import {Poketmon} from "../pokedex/Poketmon";
+import {TurnCycle} from "./TurnCycle";
+import {BattleEvent} from "./BattleEvent";
 
 export class Battle {
     constructor() {
@@ -47,5 +49,19 @@ export class Battle {
             combatant.id = key;
             combatant.init(this.element);
         });
+
+        this.turnCycle = new TurnCycle({
+            battle : this,
+            onNewEvent: event => {
+                return new Promise(resolve => {
+                    const battleEvent = new BattleEvent(event, this);
+                    battleEvent.init(resolve);
+                })
+            }
+        })
+
+        void this.turnCycle.init();
+
+
     }
 }
