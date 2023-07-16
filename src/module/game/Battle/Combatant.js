@@ -42,13 +42,13 @@ export class Combatant {
             <rect x=0 y=1 width="100%" height=2 fill="#2088F8" />
           </svg>
           
-          ${this.poketmon.status === "정상" ? `` : `<p class="Combatant_status">${this.poketmon.status}</p>`}
+          <p class="Combatant_status"></p>
         `);
         this.poketmonElement = document.createElement("img");
         this.poketmonElement.classList.add("Combatant_character");
-        this.poketmonElement.setAttribute("src", imgPokemonImgSrc );
-        this.poketmonElement.setAttribute("alt", this.poketmon.name );
-        this.poketmonElement.setAttribute("data-team", this.team );
+        this.poketmonElement.setAttribute("src", imgPokemonImgSrc);
+        this.poketmonElement.setAttribute("alt", this.poketmon.name);
+        this.poketmonElement.setAttribute("data-team", this.team);
 
         this.hpFills = this.hudElement.querySelectorAll(".Combatant_life-container > rect");
         this.xpFills = this.hudElement.querySelectorAll(".Combatant_xp-container > rect");
@@ -84,13 +84,22 @@ export class Combatant {
     }
 
     /**
-     * 포켓몬 배틀시 상태 업데이트
+     * hp 값 업데이트
      */
-    stateUpdate({hp}){
-        if(hp){
+    hpUpdate(hp) {
+        if (hp) {
             this.poketmon._currentHp = hp;
         }
     }
+
+    /**
+     * 포켓몬 배틀시 상태 업데이트
+     */
+    stateUpdate({hp}) {
+        this.hpUpdate(hp);
+
+    }
+
 
     update(changes = {}) {
         this.stateUpdate(changes);
@@ -106,6 +115,16 @@ export class Combatant {
         }
         // 경험치 바 업데이트
         this.xpFills.forEach(rect => rect.style.width = `${this.xpPercent}%`);
+
+        // 상태 업데이트
+        const statusElement = this.hudElement.querySelector(".Combatant_status");
+        if (this.poketmon.status === "정상") {
+            statusElement.innerText = this.poketmon.status;
+            statusElement.style.display = "block"
+        } else {
+            statusElement.style.display = "none";
+        }
+
 
     }
 

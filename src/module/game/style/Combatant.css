@@ -26,7 +26,7 @@
 
 .Combatant[data-team="player"] {
     left: 235px;
-    top: 105px;
+    top: 102px;
 }
 
 .CombatantEnemy[data-team="enemy"] {
@@ -72,9 +72,9 @@
 
 .Combatant .Combatant_life-container {
     position: absolute;
-    left: 31px;
+    left: 32px;
     top: 10px;
-    width: 49px;
+    width: 48px;
     height: 3px;
 }
 
