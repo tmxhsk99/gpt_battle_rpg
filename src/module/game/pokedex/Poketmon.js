@@ -2,10 +2,11 @@ import {pokedex} from "./PokedexData";
 
 export class Poketmon {
 
-    constructor(pokedexNumber, level, individualValue, effort, nature, sex, xp) {
+    constructor({pokedexNumber, level, ability, field, individualValue, effort, nature, sex, xp}) {
         const defaultLevel = 50;
         this._findPoketmon = pokedex[pokedexNumber];
         this._name = this._findPoketmon.name;
+        this._ability = ability ? ability : this._findPoketmon.sampleAbility;
         this._frontSrc = this._findPoketmon.frontSrc;
         this._backSrc = this._findPoketmon.backSrc;
         this._level = level ? level : defaultLevel;
@@ -23,6 +24,24 @@ export class Poketmon {
         this._maxXp = 4 * Math.pow(this._level, 3);
         this._status = window.PoketmonStatus.정상;
         this._sex = sex ? sex : this._findPoketmon.sex[0];
+        this._ability = ability;
+        this._field = field;
+    }
+
+    get field() {
+        return this._field;
+    }
+
+    set field(value) {
+        this._field = value;
+    }
+
+    get ability() {
+        return this._ability;
+    }
+
+    set ability(value) {
+        this._ability = value;
     }
 
     get sex() {

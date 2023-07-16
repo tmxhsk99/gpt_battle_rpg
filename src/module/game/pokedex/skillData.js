@@ -1,4 +1,19 @@
 export const skillData = {
+    "그래스필드": {
+        name: "그래스필드",
+        type: "풀",
+        category: "변화",
+        power: 0,
+        accuracy: 1,
+        priority: 0,
+        pp: 10,
+        description: "한동안 초목들이 무성하게 자라는 땅으로 만든다.",
+        additionalEffect: {
+            field: "그래스필드",
+            expiresIn: 5,
+
+        }
+    },
     "프리즈드라이": {
         name: "프리즈드라이",
         type: "얼음",

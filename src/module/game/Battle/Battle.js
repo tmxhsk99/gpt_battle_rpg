@@ -9,7 +9,13 @@ export class Battle {
     constructor() {
         this.combatants = {
             "player1": new Combatant(
-                new Poketmon(991),
+                new Poketmon({
+                    pokedexNumber: 3,
+                    field: {
+                        name: "그래스필드",
+                        expiresIn: 5,
+                    }
+                }),
                 "player"
                 , this),
             "enemy1": new Combatant(
@@ -51,7 +57,7 @@ export class Battle {
         });
 
         this.turnCycle = new TurnCycle({
-            battle : this,
+            battle: this,
             onNewEvent: event => {
                 return new Promise(resolve => {
                     const battleEvent = new BattleEvent(event, this);
